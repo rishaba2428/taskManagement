@@ -1,115 +1,89 @@
+
+
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        User []userArray=new User[5];//store the user
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println("Welcome to task manager");
-            System.out.println("Enter you name:");
-            String userName = scanner.nextLine();
+    public static void main(String[]args){
+        User[] userArray=new User[5];
+        Scanner sc=new Scanner(System.in);
+        while(true){
+            System.out.println("welcome to task manager");
+            System.out.println("enter your username");
             boolean isExistingUser=false;
             int currentUserPosition=0;
-            // check is this user is already created
-
-            for(int count=0;count<userArray.length;count++) {
-                if (userArray[count] == null) {
+            String username=sc.nextLine();
+            for(int count=0;count<userArray.length;count++){
+                if(userArray[count] == null){
                     continue;
                 }
-                if (userArray[count].getUsername().equals(userName)) {
-                    isExistingUser = true;
-                    currentUserPosition = count;
-                    break;//if the condition is true the for loop want to stop so we use this
-                }
-            }
-            User currentUser ;
-            if(!isExistingUser){//the user want to creat when is existing user is true
-                currentUser = new User(userName);//creating the user
-                for(int count=0;count<userArray.length;count++){
-                    if (userArray[count]!=null){
-                        continue;
-                    }
-                    userArray[count]=currentUser;
+                User user=userArray[count];
+                String name=user.getUsername();
+                if(name.equals(username)){
+                    isExistingUser=true;
+                    currentUserPosition=count;
                     break;
                 }
             }
-            else {//who is the current user
-                currentUser= userArray[currentUserPosition];
-
-            }
-
-            Integer choice = 0;//Autoboxing
-            while (choice !=5) {//unboxing
-                System.out.print("Welcome ");
-                System.out.println(currentUser.getUsername());
-                System.out.println("1.Add task");
-                System.out.println("2.List All task");
-                System.out.println("3.update");
-                System.out.println("4.Delete");
-                System.out.println("5.Exit");
-                System.out.println("Enter your choice:");
-                choice = new Integer(scanner.nextLine());
-                if (choice == 1) {
-                    System.out.println("Enter your task Description:");
-                    String taskDescription = scanner.nextLine();
-                    Task task = new Task(taskDescription);
-                    for(int count=0;count < currentUser.getTaskArray().length;count++){
-                        if(currentUser.getTaskArray()[count]==null){
-                            currentUser.getTaskArray()[count]=task;
-                            break;
-                        }
-
-                    }
-
-                    System.out.println("Task Added Successfully");
-                } else if (choice==2) {
-                    boolean isThereAnyTask = false;
-                    for (int count = 0; count < currentUser.getTaskArray().length; count++) {
-                        if (currentUser.getTaskArray()[count]!= null) {
-                            String task = currentUser.getTaskArray()[count].getTaskdescription();
-                            System.out.println(task);
-                            isThereAnyTask = true;
-                        }
-                    }
-                    if (!isThereAnyTask) {
-                        System.out.println("there is no task");
-                    }
-
-
-                    System.out.println("your all task");
-                } else if (choice==3) {
-                    for(int count=0;count<currentUser.getTaskArray().length;count++){
-                        if(currentUser.getTaskArray()[count]!=null){
-                            System.out.println("Enter Your new description:");
-                            String newDescription=scanner.nextLine();
-                            currentUser.getTaskArray()[count].setTaskdescription(newDescription);
-                            System.out.println("List is successfully updated");
-                        }
-                        if (currentUser.getTaskArray()[count]==null){
-                            System.out.println("there is no data before,you can able to create new description");
-                            break;
-                        }
-
-                    }
-
-                } else if (choice==4) {
-                    for (int count=0;count<currentUser.getTaskArray().length;count++){
-                        if(currentUser.getTaskArray()[count]!=null){
-                            System.out.print("1.");
-                            System.out.println(currentUser.getTaskArray()[count].getTaskdescription());
-                            currentUser.getTaskArray()[count].setTaskdescription(null);
-                            System.out.println("successfully deleted");
-                        }
-                        if(currentUser.getTaskArray()[count]==null){
-                            System.out.println("There is no description to delete");
-                            break;
-                        }
-                    }
-
-                } else if (choice ==5) {
-                    System.out.println("Thanks for using it!!");
+            User currentUser;
+            if(isExistingUser == false){
+                currentUser=new User(username);
+                for(int count=0;count<userArray.length;count++)
+                {
+                   if (userArray[count]!=null)
+                   {
+                       continue;
+                   }
+                   userArray[count]=currentUser;
+                   break;
                 }
+
+
             }
-        }
-    }
-}
+            else{
+                currentUser=userArray[currentUserPosition];
+            }
+
+            Integer choice=0; //autoboxing
+            while(choice!=2){ //unboxing
+                System.out.println("welcome ");
+                System.out.println(currentUser.getUsername());
+                System.out.println("1.AddTask");
+                System.out.println("2.list all my task");
+                System.out.println("3.ExitTask");
+                System.out.println("enter your choice");
+                choice=new Integer(sc.nextLine());
+                if(choice==1){
+                    System.out.println("enter your description");
+                    String taskdescription=sc.nextLine();
+                    Task usertask=new Task(taskdescription);
+                 for(int count=0; count < currentUser.getTaskArray().length;count++)
+                 {
+                    if(currentUser.getTaskArray()[count]==null)
+                    {
+                        currentUser.getTaskArray()[count]=usertask;
+                        break;
+                    }
+                 }
+
+                    System.out.println("task added successfully");
+                }
+                else if(choice==2)
+                {
+                    for(int count=0;count<currentUser.getTaskArray().length;count++)
+                    {
+                       String taskDescrption=currentUser.getTaskArray()[count].getTaskdiscription();
+                        System.out.println(taskDescrption);
+                    }
+                }
+                else if(choice==3){
+                    System.out.println("Tnxs for using!");
+                }
+
+
+
+
+
+
+
+            }
+        }}}
